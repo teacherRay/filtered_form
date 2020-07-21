@@ -54,7 +54,7 @@ body {
 </style>
 
 </head>
-<body style="background-color:#DDA0DD">>
+<body style="background-color:linen;">>
 <div class="topnav">
   <a class="active" href="#home">Home</a>
   <a href="#news">News</a>
@@ -99,7 +99,7 @@ body {
                     while($rows = $resultcomment-> fetch_assoc())
                     {
                         $EnglishComment = $rows['EnglishComment'];
-                        echo "<option value='$name.$EnglishComment'>$name.$EnglishComment</option>";
+                        echo "<option value='$EnglishComment'>$name.$EnglishComment</option>";
                     }
                     ?></h2> 
                 </select><br>

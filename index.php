@@ -11,10 +11,12 @@
             </div>
         <?php endif ?>
   <!--**************************************End  Setup Messages ***********************************************  -->        
+  
 
 <!DOCTYPE html>
 <html>
     <head>
+
     <title>Home of English Reports</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,8 +55,20 @@ body {
 }
 </style>
 
+
 </head>
-<body style="background-color:powderblue;">>
+$searchq = '104i';
+<body style="background-color:linen;">
+<form action="index.php" method = "post">
+  
+  <input type="text" name="search" placeholder = "Select a classroom"><br><br>
+  <input type="submit" value = "SEARCH">
+</form>
+
+
+
+
+
 <div class="topnav">
   <a class="active" href="#home">Home</a>
   <a href="#news">News</a>
@@ -67,11 +81,11 @@ body {
  <?php $resultcomment = $mysqli->query("SELECT EnglishComment FROM comments"); ?>
 
     <!-- ************************************** Begin Connect DB  ************************************************ -->
-    
-        <<div class="container" align-content-center>
+   
+        <div class="container" align-content-center>
         <?php
-            // $mysqli = new mysqli("localhost","ray","password","reports")or die(mysqli_error($mysqli));
-            $result = $mysqli->query("SELECT * FROM data WHERE classroom = '101i'AND classtime = 'am'") or die($mysqli->error);
+            $mysqli = new mysqli("localhost","ray","password","reports")or die(mysqli_error($mysqli));
+           $result = $mysqli->query("SELECT * FROM data WHERE classroom = '101i' AND CLASSTIME = 'pm'") or die($mysqli->error);
              // Print $result to see if it holds data
             // pre_r($result); 
            
@@ -79,7 +93,7 @@ body {
     <!-- ************************************** End Connect DB ****************************************************  -->
 
     <div class="row justify-content-center">
-        <form action="process.php" method="POST">
+        <form action="index.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
 
             <div class="form-group">
@@ -88,7 +102,6 @@ body {
             <div class="form-group">
                 <h3><label><?php echo $classroom ,' ' ,$classtime?></label></h3>
             </div>
-
 
             <form action="process.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
@@ -99,7 +112,7 @@ body {
                     while($rows = $resultcomment-> fetch_assoc())
                     {
                         $EnglishComment = $rows['EnglishComment'];
-                        echo "<option value='$name.$EnglishComment'>$name.$EnglishComment</option>";
+                        echo "<option value='$EnglishComment'>$name.$EnglishComment</option>";
                     }
                     ?></h2> 
                 </select><br>
@@ -145,10 +158,7 @@ body {
                         
 
     <!-- **************************************  Setup Edit Button and put in last table column ******************************************   -->
-                        <!-- <td>
-                            <a href="index.php?edit=<?php echo $row['id']; ?>"
-                            class="btn btn-info">Edit</a>                          
-                        </td> -->
+                       
                     </tr>
                   
             <?php endwhile; ?>  <!-- ****************** End While() Loop ****************************   --> 
@@ -159,4 +169,9 @@ body {
    
         </div>
         </div>
+        
     </body>
+    
+    </html>
+
+    
