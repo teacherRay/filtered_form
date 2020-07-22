@@ -3,34 +3,39 @@
 if(isset($_POST['search']))
 {
     $valueToSearch = $_POST['valueToSearch'];
-    $sql = "SELECT * FROM student WHERE 1=1";
+    
 
-if (!empty($valueToSearch)) $sql .= " AND classroom = '$valueToSearch'";
+    $sql = "SELECT * FROM data WHERE 1=1";
 
-    $query = "SELECT * FROM `data` WHERE (`classroom`) LIKE '%".$valueToSearch."%'";
+if (!empty($valueToSearch)) $sql .= " AND comboclass = '$valueToSearch'";
+
+    $query = "SELECT * FROM `data` WHERE CONCAT(`comboclass`) LIKE '%".$valueToSearch."%'";
     
     $search_result = filterTable($query);
-   // printf("Error: %s\n", ($search_result));
-    //exit();
+   
     
 }
  else {
     
     //exit();
-    $query = "SELECT * FROM `data`";
-    $search_result = filterTable($query);
+    // $query = "SELECT * FROM `data`";
+    // $search_result = filterTable($query);
 }
+
+
 
 // function to connect and execute the query
 function filterTable($query)
 {
     $connect = new mysqli("localhost","ray","password","reports")or die(mysqli_error($mysqli));
     $filter_Result = mysqli_query($connect, $query);
-    printf("Error: %s\n", (filter_Result));
+    
     return $filter_Result;
 }
 
 ?>
+<p>
+</p>
 
 <!DOCTYPE html>
 <html>
@@ -46,15 +51,18 @@ function filterTable($query)
     <body>
         
         <form action="filtered.php" method="post">
-            <input type="text" name="valueToSearch" placeholder="Value To Search"><br><br>
-            <input type="submit" name="search" value="Filter Button"><br><br>
+            <input type="text" name="valueToSearch" placeholder="Enter classname and time in this format-> 104i am"><br><br>
+         
+
+            <input type="submit" name="search" value="Filter Class Button"><br><br>
+            <!-- <input type="submit" name="searchtime" value="Filter time Button"><br><br> -->
             
             <table>
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>class</th>
-                    <th>time</th>
+                    <th>Comboclass</th>
+                    <!-- <th>time</th> -->
                    
                 </tr>
 
@@ -62,9 +70,9 @@ function filterTable($query)
                 <?php while($row = mysqli_fetch_array($search_result)):?>
                 <tr>
                     <td><?php echo $row['id'];?></td>
-                    <td><?php echo $row['name'];?></td>
-                    <td><?php echo $row['classroom'];?></td>
-                    <td><?php echo $row['classtime'];?></td>
+                    <td><?php echo $row['studentname'];?></td>
+                    <td><?php echo $row['comboclass'];?></td>
+                    
                 </tr>
                 <?php endwhile;?>
             </table>
